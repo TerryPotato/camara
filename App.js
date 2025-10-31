@@ -26,7 +26,7 @@ export default function CameraGalleryApp() {
   const [isFromCamera, setIsFromCamera] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
-  // ⬇️ Valores animados (estado interno de la animación)
+  // Valores animados (estado interno de la animación)
   // fade: controla la opacidad de la imagen (0 = invisible, 1 = visible)
   const fade = useRef(new Animated.Value(0)).current
   // scale: pequeño “pop” (0.96 → 1) para que se sienta más viva la transición
@@ -57,7 +57,7 @@ export default function CameraGalleryApp() {
       try {
         const photo = await cameraRef.current.takePictureAsync({ quality: 0.8 })
         setCapturedImage(photo.uri)
-        setIsFromCamera(true)     // ⬅️ NUEVO: marcar que viene de cámara
+        setIsFromCamera(true)     // marcar que viene de cámara
         setShowCamera(false)
       } catch (error) {
         Alert.alert('Error', 'Error al tomar la foto')
@@ -79,7 +79,7 @@ export default function CameraGalleryApp() {
       })
       if (!result.canceled) {
         setCapturedImage(result.assets[0].uri)
-        setIsFromCamera(false)    // ⬅️ NUEVO: viene de galería
+        setIsFromCamera(false)    // viene de galería
       }
     } catch (error) {
       Alert.alert('No se pudo seleccionar la foto')
@@ -115,7 +115,7 @@ export default function CameraGalleryApp() {
     ]).start()
   }
 
-  // ⬇️ NUEVO: guardar en la librería del dispositivo
+  // Guardar en la librería del dispositivo
   const handleSavePhoto = async () => {
     if (!capturedImage) return
     try {
@@ -140,7 +140,7 @@ export default function CameraGalleryApp() {
   }
 
 
-  // ⬇️ Disparamos la animación cada vez que cambia capturedImage.
+  // Disparamos la animación cada vez que cambia capturedImage.
   // También corre una vez al montar el componente (con el placeholder).
   useEffect(() => {
     animateIn()
@@ -220,7 +220,8 @@ export default function CameraGalleryApp() {
       <TouchableOpacity style={styles.openGalerybutton} onPress={pickImageFromGallery}>
         <Text style={styles.buttonText}>🖼️ Abrir galería</Text>
       </TouchableOpacity>
-
+    
+    {/*Boton para guardar la foto tomada */}
       {capturedImage && isFromCamera && (
         <TouchableOpacity
           style={styles.saveButton}
